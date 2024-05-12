@@ -1,0 +1,1299 @@
+#include <stdio.h>
+#include <stdlib.h>
+char a[15][15];
+
+int x=0,y=4,i=0,j=0,f;
+int f1=8,f2=9,z1=0,z2;
+char h,t;
+int v[300];
+
+int check()
+{
+    v[0]=8;
+    if(v[z1]==6){
+        if(v[z1-1]==7){
+            z1--;
+        return 1;
+        }
+        else 
+        return 0;
+    }
+    else if(v[z1]==7){
+        if(v[z1-1]==6){
+            z1--;
+        return 1;
+        }
+        else 
+        return 0;
+    }
+    else if(v[z1]==8){
+        if(v[z1-1]==9){
+            z1--;
+        return 1;
+        }
+        else 
+        return 0;
+    }
+    else if(v[z1]==9){
+        if(v[z1-1]==8){
+            z1--;
+            
+        return 1;
+        }
+        else 
+        return 0;
+    }
+}
+int food()
+{ 
+    a[f1][f2]='a';
+    system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    if(x==f1 && y==f2)
+    {
+        if(f1==8 || f2==9){
+          f1=3;
+          f2=2;
+        }
+        else if(f1==3 || f2==2){
+            f1=13;
+            f2=13;
+        }
+        else if(f1==13 || f2==13){
+            f1=7;
+            f2=2;
+        }
+        else if(f1==7 || f2==2){
+            f1=3;
+            f2=10;
+        }
+        else if(f1==3 || f2==10){
+            f1=13;
+            f2=3;
+        }
+        else{
+            f1=8;
+            f2=9;
+        }
+        
+           
+        return 1; 
+        }
+        
+       
+    
+    else
+    {
+        return 0;
+    }
+    
+}
+
+int up()
+{
+    int l=0,b=0,d=0,n,k;
+    char e;
+    n=x;
+    k=y;
+    e=a[n][k];
+   
+    if(food())
+    {
+        if(a[i-1][j]=='.')
+        {
+            a[i+1][j]='.';
+            t=a[++i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j+1]='.';
+            t=a[i][++j];
+        }
+        else if(a[i][j+1]=='.')
+        {
+            a[i][j-1]='.';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i-1][j]='.';
+            t=a[--i][j];
+        }
+        else
+        {
+            a[i+1][j]='.';
+            t=a[++i][j];
+        }
+        
+    }
+    if(a[n-1][k]=='.'){
+    if(e=='.')
+    {
+        d++;
+        a[n-d][k]='.';
+        h=a[--x][y];
+       
+       
+        a[n][k]=' ';
+    }
+    if(a[n][k-1]=='.') //neighbour =  left 
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+         else
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+    }
+    else if(a[n+1][k]=='.')  //neighbour = down
+    {
+        b++;
+        a[n][k]='.';
+        a[n+b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+         else
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+    }
+    else if(a[n][k+1]=='.')    //neighbour = rit
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k+l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+         else
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+    }
+     if(x==0 || y==0 || x==14 || y==14)
+         {
+             system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }
+         system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+         return printf("G A M E - O V E R");
+    }
+    else
+    {
+      if(e=='.')
+    {
+        d++;
+        a[n-d][k]='.';
+        h=a[--x][y];
+       
+       
+        a[n][k]=' ';
+    }
+    if(a[n][k-1]=='.') //neighbour =  left 
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+         else
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+    }
+    else if(a[n+1][k]=='.')  //neighbour = down
+    {
+        b++;
+        a[n][k]='.';
+        a[n+b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+         else
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+    }
+    else if(a[n][k+1]=='.')    //neighbour = rit
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k+l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+         else
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+    }
+     if(x==0 || y==0 || x==14 || y==14)
+         {
+             system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }    
+    return play();
+    }
+    
+}
+ int down()
+{
+    int l=0,b=0,d=0,n,k;
+    char e;
+    n=x;
+    k=y;
+    e=a[n][k];
+     if(food())
+    {
+        if(a[i-1][j]=='.')
+        {
+            a[i+1][j]='.';
+            t=a[++i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j+1]='.';
+            t=a[i][++j];
+        }
+        else if(a[i][j+1]=='.')
+        {
+            a[i][j-1]='.';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i-1][j]='.';
+            t=a[--i][j];
+        }
+        else
+        {
+            a[i-1][j]='.';
+            t=a[--i][j];
+        }
+    }
+   if(a[n+1][k]=='.'){
+    if(e=='.')
+    {
+        d++;
+        a[n+d][k]='.';
+        h=a[++x][y];
+       
+        a[n][k]=' ';
+    }
+    if(a[n][k-1]=='.')  //neighbour  =  left
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            t=a[++i][j];
+        }
+    }
+    else if(a[n-1][k]=='.') //neighbour  =  up
+    {
+        b++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            t=a[++i][j];
+        }
+    }
+    else if(a[n][k+1]=='.')  //  neighbour =  rit  
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k+l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            t=a[++i][j];
+        }
+    }
+    if(x==0 || y==0 || x==14 || y==14)
+         {
+             system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }
+          system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+   }
+   else{
+       if(e=='.')
+    {
+        d++;
+        a[n+d][k]='.';
+        h=a[++x][y];
+       
+        a[n][k]=' ';
+    }
+    if(a[n][k-1]=='.')  //neighbour  =  left
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            t=a[++i][j];
+        }
+    }
+    else if(a[n-1][k]=='.') //neighbour  =  up
+    {
+        b++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            t=a[++i][j];
+        }
+    }
+    else if(a[n][k+1]=='.')  //  neighbour =  rit  
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k+l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            t=a[++i][j];
+        }
+    }
+    if(x==0 || y==0 || x==14 || y==14)
+         {
+             system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }
+   
+    return play();
+   }
+    
+}
+int rit()
+{
+    int l=0,b=0,d=0,n,k;
+    char e;
+    n=x;
+    k=y;
+    e=a[n][k];
+     if(food())
+    {
+        if(a[i-1][j]=='.')
+        {
+            a[i+1][j]='.';
+            t=a[++i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j+1]='.';
+            t=a[i][++j];
+        }
+        else if(a[i][j+1]=='.')
+        {
+            a[i][j-1]='.';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i-1][j]='.';
+            t=a[--i][j];
+        }
+        else
+        {
+            a[i][j-1]='.';
+            t=a[i][--j];
+        }
+    }
+    if(a[n][k+1]=='.'){
+    if(e=='.')
+    {
+        d++;
+        a[n][k+d]='.';
+        h=a[x][++y];
+       
+        a[n][k]=' ';
+    }
+    if(a[n][k-1]=='.')  //neighbour  =  left
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][++j]='.';
+        }
+        
+     }
+    else if(a[n-1][k]=='.') //neighbour  =  up
+    {
+        b++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][++j]='.';
+        }
+    }
+    else if(a[n+1][k]=='.')  //  neighbour =  down 
+    {
+        b++;
+        a[n][k]='.';
+        a[n+b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][++j]='.';
+        }
+    }
+    if(x==0 || y==0 || x==14 || y==14)
+         {
+             system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }
+         system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+    }
+    else{
+        if(e=='.')
+    {
+        d++;
+        a[n][k+d]='.';
+        h=a[x][++y];
+       
+        a[n][k]=' ';
+    }
+    if(a[n][k-1]=='.')  //neighbour  =  left
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][++j]='.';
+        }
+        
+     }
+    else if(a[n-1][k]=='.') //neighbour  =  up
+    {
+        b++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][++j]='.';
+        }
+    }
+    else if(a[n+1][k]=='.')  //  neighbour =  down 
+    {
+        b++;
+        a[n][k]='.';
+        a[n+b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][++j]='.';
+        }
+    }
+    if(x==0 || y==0 || x==14 || y==14)
+         {
+             system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }
+        return play();
+    }
+}
+int left()
+{
+    int l=0,b=0,d=0,n,k;
+    char e;
+    n=x;
+    k=y;
+    e=a[n][k];
+     if(food())
+    {
+        if(a[i-1][j]=='.')
+        {
+            a[i+1][j]='.';
+            t=a[++i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j+1]='.';
+            t=a[i][++j];
+        }
+        else if(a[i][j+1]=='.')
+        {
+            a[i][j-1]='.';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i-1][j]='.';
+            t=a[--i][j];
+        }
+        else
+        {
+            a[i][j+1]='.';
+            t=a[i][++j];
+        }
+    }
+    if(a[n][k-1]=='.'){
+    if(e=='.')
+    {
+        d++;
+        a[n][k-d]='.';
+        h=a[x][--y];
+       
+        a[n][k]=' ';
+    }
+    if(a[n][k+1]=='.')  //neighbour  =  rit
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k+l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][--j]='.';
+        }
+    }
+    else if(a[n-1][k]=='.') //neighbour  =  up
+    {
+        b++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][--j]='.';
+        }
+    }
+    else if(a[n+1][k]=='.')  //  neighbour =  down 
+    {
+        b++;
+        a[n][k]='.';
+        a[n+b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][--j]='.';
+        }
+    }
+    if(x==0 || y==0 || x==14 || y==14)
+         {
+             system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }
+         system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }
+         else{
+             
+         if(e=='.')
+    {
+        d++;
+        a[n][k-d]='.';
+        h=a[x][--y];
+       
+        a[n][k]=' ';
+    }
+    if(a[n][k+1]=='.')  //neighbour  =  rit
+    {
+        l++;
+        a[n][k]='.';
+        a[n-b][k+l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][--j]='.';
+        }
+    }
+    else if(a[n-1][k]=='.') //neighbour  =  up
+    {
+        b++;
+        a[n][k]='.';
+        a[n-b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][--j]='.';
+        }
+    }
+    else if(a[n+1][k]=='.')  //  neighbour =  down 
+    {
+        b++;
+        a[n][k]='.';
+        a[n+b][k-l]='.';
+        if(a[i][j+1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][++j];
+        }
+        else if(a[i-1][j]=='.')
+        {
+            a[i][j]=' ';
+            t=a[--i][j];
+        }
+        else if(a[i][j-1]=='.')
+        {
+            a[i][j]=' ';
+            t=a[i][--j];
+        }
+        else if(a[i+1][j]=='.')
+        {
+            a[i][j]=' ';
+            a[++i][j]='.';
+        }
+        else
+        {
+            a[i][j]=' ';
+            a[i][--j]='.';
+        }
+    }
+    if(x==0 || y==0 || x==14 || y==14)
+         {
+             system("clear");
+              for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    return printf("G A M E - O V E R !!!!!!!!");
+         }
+    return play();
+    
+}
+}
+
+int play()
+{
+    
+    system("clear");
+     for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            printf("%c",a[m][r]);
+        }
+        printf("\n");
+    }
+    scanf("%d",&f);
+    z1++;
+    v[z1]=f;
+    switch(f)
+    {
+case 6:
+      
+    
+     if(check())
+     return play();
+     
+     up();
+      
+     break;
+    
+ case 7:
+     if(check())
+     return play();
+     down();
+     break;
+
+ case 8:
+       if(check())
+       return play();
+      rit();
+      break;
+
+case 9:
+       if(check())
+       return play();
+      left();
+      break;
+}
+}
+void main()
+{
+    int m,r;
+    for(int m=0;m<15;m++)
+    {
+        for(int r=0;r<15;r++)
+        {
+            if(m==0 || r==0 || m==14 || r==14)
+            a[m][r]='*';
+            else
+            a[m][r]=' ';
+        }
+    }
+    a[f1][f2]='a';
+    a[1][1]='.';
+    a[1][2]='.';
+    a[1][3]='.';
+    a[1][4]='.';
+    a[1][5]='.';
+    h=a[++x][++y];
+    
+    t=a[++i][++j];
+    play();
+    
+    
+}
