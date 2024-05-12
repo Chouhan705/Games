@@ -1,0 +1,185 @@
+import java.util.*;
+
+class Hangman 
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Welcome to Hangman");
+        System.out.println("");
+        System.out.println("  O/ hi its me, the man to be hanged in pieces \n /| \n /\\");
+        System.out.println("");
+        words();
+    }
+
+    static void words()
+    {
+        Scanner sc = new Scanner(System.in);
+
+        String[] list = {"minecraft","coding","football","laptop","banana"};
+        System.out.println("Select a word \nEnter any number from 1-5");
+        int wordnum = sc.nextInt();
+        String word="";
+        switch (wordnum) 
+        {
+            case 1:
+                word = list[0]; 
+                break;
+                
+            case 2:
+                word = list[1];
+                break;
+                
+            case 3:
+                word = list[2];
+                break;
+
+            case 4:
+                word = list[3];
+                break; 
+            
+            case 5:
+                word = list[4];
+                break;
+        
+            default:
+            
+                break;
+        }
+        if(wordnum>5)
+        {
+            teach();
+        }
+        else
+        {
+        System.out.println("\033[H\033[2J");
+        System.out.println(" O Got the word. Its a good one and please save me :) \n /|\\ \n /\\");
+        String blank = "";
+        for(int i =0;i<word.length();i++)
+        {
+            blank=blank+"-";
+        }
+        System.out.println("");
+        System.out.println(blank);
+        System.out.println("");
+        System.out.println("Nows the time to guess");
+        System.out.println("");
+        System.out.println("Press 0 to start the game");
+        int start = sc.nextInt();
+        if(start==0)
+        {
+            guess(word,blank);
+        }
+        else
+        {
+            System.out.println(" O Zero dalna hai bhai :| \n/|\\ \n/\\");
+        }
+        }   
+    }
+    static void guess(String word, String blank)
+    {
+        System.out.println("\033[H\033[2J");
+        Scanner sc = new Scanner(System.in);
+
+        int count=0;
+        int correct=0;
+        int penalty=0;
+        String incorrect ="";
+        
+        while(count<100)
+        {
+            
+            System.out.println(blank);
+            System.out.println("Guess a letter");
+            char letter = sc.next().charAt(0);
+            for(int i=0;i<word.length();i++)
+            {
+                if(word.charAt(i)==letter)
+                {
+                    blank=blank.substring(0,i)+letter+blank.substring(i+1);  
+                    correct++;
+                }
+                
+            }
+            if(correct==0)
+            {
+                penalty++;
+            }
+            correct =0;
+            
+            System.out.println("");
+            System.out.println(blank);
+            System.out.println("");
+            if(word.equals(blank))
+            {
+                System.out.println("\033[H\033[2J");
+                System.out.println(" \\O/ YOU WON AND SAVED ME :) \n  |\n /\\");
+                System.out.println("The word was "+word);
+                break;
+            }
+            
+            System.out.println("\033[H\033[2J");
+            System.out.println("You have "+(7-penalty)+" mistakes left");
+            incorrect = incorrect + letter +" ";
+            System.out.println("You have already guessed "+incorrect);
+
+            count++;
+            switch (penalty) 
+            {
+                case 1:
+                System.out.println("_____\n|\n|\n|\n|");
+                break;
+                    
+                case 2:
+                System.out.println("_____\n| O \n|\n|\n|");
+                break;
+                    
+                case 3:
+                System.out.println("_____\n| O \n| | \n|\n|");
+                break;
+
+                case 4:
+                System.out.println("_____\n| O \n|/| \n|\n|");
+                break;
+
+                case 5:
+                System.out.println("_____\n| O \n|/|\\\n|\n|");
+                break;
+
+                case 6:
+                System.out.println("_____\n| O \n|/|\\\n|/\n|");
+                break;
+
+                case 7:
+                System.out.println("_____\n| O \n|/|\\\n|/ \\\n|");
+                break;
+            
+                default:
+                break;
+                
+            }
+            if(penalty==7)
+                {
+                    System.out.println("\033[H\033[2J");
+                    System.out.println("   O YOU LOST:( [I grew taller :)] \n   |\n  /|\\\n  /\\");
+                    System.out.println("The word was "+word);
+                    break;
+                }
+        }
+    } 
+
+    static void teach()
+    {
+        System.out.println("Let me teach you numbers");
+        System.out.println("");
+        System.out.println("1 - one ");
+        System.out.println("2 - two ");
+        System.out.println("3 - three ");
+        System.out.println("4 - four ");
+        System.out.println("5 - five ");
+        System.out.println("6 - six ");
+        System.out.println("And I asked from one to 1 to 5 ");
+        System.out.println("Taught and made by Aditya Chouhan /---");
+    }
+}
