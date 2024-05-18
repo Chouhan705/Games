@@ -1,0 +1,85 @@
+import java.util.*;
+import java.lang.*;
+
+class Typetest extends Thread
+{
+    public void run()
+    {
+        try
+        {
+        Scanner sc = new Scanner (System.in) ;
+        System.out.println("Welcome to the TYPE TEST") ;
+        System.out.println("You just have to type in the words that are dsiplayed accurately, ") ;
+        System.out.println("You will get your accuracy assesment at the end.") ;
+        System.out.println("Good luck") ;
+        System.out.println("Enter 0 to begin") ;
+        int init = sc.nextInt() ;
+        game1() ;
+        game2() ;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e) ;
+        }
+    }
+    static void game1()
+    {
+        try
+        {
+        Scanner sc = new Scanner (System.in) ;
+        System.out.println("\033[H\033[2J") ;
+        String input ="" ;
+        int correct= 0 ;
+        int incorect = 0 ;
+        int wordcorrect = 0 ;
+        int total = 0 ;
+        String word ="";
+        String [] list ={"apple" , "banana" , "grapes" , "orange" , "mango" , "kiwi" , "starfruit" , "watermelon" , "peach" , "guava"} ;
+        for(int i = 0 ; i < 10 ; i++) 
+        {
+            System.out.println("\033[H\033[2J") ;
+            System.out.println(list[i]) ;
+            Thread.sleep(500);
+            System.out.println("\033[H\033[2J") ;
+            input = sc.nextLine();
+            if(input.equals(list[i]))
+            {
+                wordcorrect++ ;
+            }
+            word = list[i] ;
+            for( int j=0 ; j < word.length() ; j++)
+            {
+                if(word.charAt(j)==input.charAt(j))
+                {
+                    correct++ ;
+                }
+                else
+                {
+                    incorect++ ;
+                }
+                total ++ ;
+            }
+        }
+        System.out.println("Here is the summary") ;
+        System.out.println("You got " + wordcorrect + " words completely correct") ;
+        System.out.println(" You made " + incorect + " mistakes");
+        System.out.println("You got a total of " + correct + " letters correct out of " + total);
+        }
+        catch(Exception e)
+        {
+            System.out.println(e) ;
+        }
+
+    }
+
+    static void game2()
+    {
+
+    }
+    public static void main(String[] args)
+    {
+        Typetest t = new Typetest() ;
+        t.start() ;
+
+    }
+}
