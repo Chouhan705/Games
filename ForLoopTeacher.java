@@ -1,8 +1,6 @@
 import java.util.*;
 import java.lang.*;
 import java.text.*;
-
-
 public class ForLoopTeacher
 {
     static int length , breadth;
