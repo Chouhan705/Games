@@ -2,11 +2,11 @@ import java.util.*;
 import java.lang.*;
 import java.text.*;
 
-
 public class ForLoopTeacher
 {
-    static int length , breadth;
+    static int length, breadth;
     static char[][] MAP;
+
     public static void main(String[] args)
     {
         System.out.println("Welcome");
@@ -14,113 +14,124 @@ public class ForLoopTeacher
         System.out.println("Enter 0 to begin");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
-        while (choice!= 0)
+        while (choice != 0)
         {
             System.out.println("Enter 0 to begin");
             choice = sc.nextInt();
         }
-        if(choice == 0 )
+        if (choice == 0)
         {
             Start();
         }
     }
+
     public static void Start()
     {
-        System.out.println("Lets Draw a map for your challenge");
+        System.out.println("Let's Draw a map for your challenge");
         System.out.println("Enter the Length and Breadth for your map");
         System.out.println("Enter the same for a square map or different for a rectangular map");
         Scanner sc = new Scanner(System.in);
         length = sc.nextInt();
         breadth = sc.nextInt();
-        GenerateMap(length,breadth);
+        GenerateMap(length, breadth);
         DrawMap();
-        System.out.println("If  you want to learn how this was map of yours was made");
-        System.out.println("Enter 0 else Enter any other number to continue the challenge");
+        System.out.println("If you want to learn how this map of yours was made");
+        System.out.println("Enter 0 else \nEnter any other number to continue the challenge");
         int choice = sc.nextInt();
-        if(choice == 0)
+        if (choice == 0)
         {
             ExplainMap();
         }
         else
         {
-            GenerateObstacle();
+            ChooseGameMode();
         }
     }
-    public static void GenerateMap(int length , int breadth)
+
+    public static void GenerateMap(int length, int breadth)
     {
-        MAP = new char[(length+2)][(breadth+2)];
-        for(int i=0;i<(length+2);i++)
+        MAP = new char[(length + 2)][(breadth + 2)];
+        for (int i = 0; i < (length + 2); i++)
         {
-            for(int j=0;j<(breadth+2);j++)
+            for (int j = 0; j < (breadth + 2); j++)
             {
-                if(i==0||j==0||i==(length+1)||j==(breadth+1))
+                if (i == 0 || j == 0 || i == (length + 1) || j == (breadth + 1))
                 {
-                    MAP[i][j]='#';
+                    MAP[i][j] = '#'; // Walls
                 }
                 else
                 {
-                    MAP[i][j]=' ';
+                    MAP[i][j] = ' '; // Empty space
                 }
             }
         }
     }
+
     public static void DrawMap()
     {
-        for(char[] display : MAP)
+        for (char[] display : MAP)
         {
-            for(char ch : display)
+            for (char ch : display)
             {
-                System.out.print(ch+" ");
+                System.out.print(ch + "   "); // Increased space between characters
             }
-            System.out.println();
+            System.out.println(); // New line after each row
+            System.out.println(); // Extra line to increase vertical space
         }
     }
+
     public static void ExplainMap()
     {
-        //Do in free time
+        // Do in free time
     }
-    public static void GenerateObstacle()
+
+    public static void ChooseGameMode()
     {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Choose Obstacle generation pattern");
-        System.out.println("1. Randomly generated obstacles");
-        System.out.println("2. Obstacles placed by you");
+        System.out.println("Choose your Game Mode");
+        System.out.println("1. Randomly generated Treasures");
+        System.out.println("2. Maze Runner");
         int choice = sc.nextInt();
-        System.out.println("Enter the number of Obstacles you want");
-        int Obstacles = sc.nextInt();
-        switch (choice) 
+        switch (choice)
         {
             case 1:
-            RandomObstacles(Obstacles);
-            break;
+                RandomTreasure();
+                break;
             case 2:
-            UserObstacles(Obstacles);
-            break;
-
+                MazeRunner();
+                break;
             default:
-            break;
+                break;
         }
     }
-    public static void RandomObstacles(int Obstacles)
+
+    public static void RandomTreasure()
     {
-        for(int i=0;i<Obstacles;i++)
+        Scanner sc = new Scanner(System.in);
+        if (breadth % 2 != 0)
         {
-            int x = (int)Math.floor(Math.random()*(length-1+1)+1);
-            int y = (int)Math.floor(Math.random()*(breadth-1+1)+1);
-            MAP[x][y]='X';
+            MAP[0][1] = ' '; // Entrance
+            MAP[length + 1][breadth] = ' '; // Exit
+        }
+        else
+        {
+            MAP[0][breadth / 2] = ' '; // Entrance
+            MAP[length + 1][breadth / 2] = ' '; // Exit
+        }
+        System.out.println("Enter the number of Treasures you want");
+        int Treasures = sc.nextInt();
+        for (int i = 0; i < Treasures; i++)
+        {
+            int x = (int) Math.floor(Math.random() * (length - 1 + 1) + 1);
+            int y = (int) Math.floor(Math.random() * (breadth - 1 + 1) + 1);
+            MAP[x][y] = 'X'; // Treasure
         }
         DrawMap();
     }
-    public static void UserObstacles(int Obstacles)
+
+    public static void MazeRunner()
     {
-        for(int i=0;i<Obstacles;i++)
-        {
-            System.out.println("Enter the coordinates of Obstacle "+(i+1));
-            Scanner sc = new Scanner(System.in);
-            int x = sc.nextInt();
-            int y = sc.nextInt();
-            MAP[x][y]='X';
-        }
-        DrawMap();
+
+        System.out.println("Maze Runner mode is not yet implemented.");
     }
 }
