@@ -1,0 +1,149 @@
+import java.util.*;
+import java.lang.*;
+
+public class MazeTest1 
+{
+    static int Length = 10;
+    static int Breadth = 10;
+    static char[][] maze = new char[Length+2][Breadth+2];
+
+    public static void main(String[] args)
+    {
+        Create();
+        Generate();
+        Display();
+        Solve();
+    }
+
+    public static void Create()
+    {
+        for(int i = 0 ; i<Length+2 ; i++)
+        {
+            for(int j = 0 ; j<Breadth+2 ; j++)
+            {
+                if(i==0)
+                {
+                    maze[i][j] = '_';
+                }
+                else if(i==Length+1)
+                {
+                    maze[i][j] = '-';
+                }
+                else if(j==0||j==Breadth+1)
+                {
+                    maze[i][j] = '|';
+                }
+                else
+                {
+                    maze[i][j] = ' ';
+                }
+            }
+        }
+    }
+    public static void Generate()
+    {
+        Random rand = new Random();
+        int StartX = 1;
+        int StartY = 1;
+        int EndX = Length;
+        int EndY = Breadth;
+        int CurrentX = StartX;
+        int CurrentY = StartY;
+        maze[CurrentX][CurrentY]='S';
+        char UpPosition = maze[CurrentX][CurrentY-1];//direction=1
+        char DownPosition= maze[CurrentX][CurrentY+1];//direction=2
+        char LeftPosition= maze[CurrentX-1][CurrentY];//direction=3
+        char RightPosition = maze[CurrentX+1][CurrentY];//direction=4
+        while(CurrentX!=EndX && CurrentY!=EndY)
+        {
+
+            if(CurrentX<1)
+            {
+                CurrentX++;
+                continue;
+            }
+            else if(CurrentX>Length-1)
+            {
+                CurrentX--;
+                continue;
+            }
+            if(CurrentY<1)
+            {
+                CurrentY++;
+                continue;
+            }
+
+            else if(CurrentY>Breadth-1)
+            {
+                CurrentY--;
+                continue;
+            }
+            int Direction = rand.nextInt(4-1+1)+1;
+            if(Direction==1)
+            {
+                if(NoWall(UpPosition))
+                {
+                    continue;
+                }
+                CurrentX--;
+                maze[CurrentX][CurrentY]='^';
+            }
+            else if(Direction==2)
+            {
+                if(NoWall(DownPosition))
+                {
+                    continue;
+                }
+                CurrentX++;
+                maze[CurrentX][CurrentY]='v';
+            }
+            else if(Direction==3)
+            {
+                if(NoWall(LeftPosition))
+                {
+                    continue;
+                }
+                CurrentY--;
+                maze[CurrentX][CurrentY]='<';
+            }
+            else if(Direction==4)
+            {
+                if(NoWall(RightPosition))
+                {
+                    continue;
+                }
+                CurrentY++;
+                maze[CurrentX][CurrentY]='>';
+            }
+        }
+        maze[CurrentX][CurrentY] = 'E';
+    }
+
+    public static void Display()
+    {
+        for(int i = 0 ; i<Length+2 ; i++)
+        {
+            for(int j = 0 ; j<Breadth+2 ; j++)
+            {
+                System.out.print(maze[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+    public static boolean NoWall(int Position)
+    {
+        if(Position == '_'|| Position == '^'|| Position == 'v'|| Position == '<' || Position == '>'|| Position == '|'|| Position == '-')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static void Solve()
+    {
+
+    }
+}
