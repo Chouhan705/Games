@@ -130,4 +130,21 @@ public class MazeTest1
             System.out.println();
         }
     }
- 
+    public static boolean NoWall(int Position)
+    {
+        if(Position == '_'|| Position == '^'|| Position == 'v'|| Position == '<' || Position == '>'|| Position == '|'|| Position == '-')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static void Solve()
+    {
+
+    }
+}
+
