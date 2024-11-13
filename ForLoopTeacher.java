@@ -67,18 +67,23 @@ public class ForLoopTeacher
         }
     }
 
-    public static void DrawMap()
-    {
-        for (char[] display : MAP)
-        {
-            for (char ch : display)
-            {
-                System.out.print(ch + "   "); // Increased space between characters
+    public static void DrawMap() {
+        int verticalSpacing = 2; // Adjust this for vertical spacing
+        int horizontalSpacing = 3; // Adjust this for horizontal spacing
+    
+        for (char[] display : MAP) {
+            // Print each character in the row with horizontal spacing
+            for (char ch : display) {
+                System.out.print(ch); // Print character
+                // Print horizontal spaces
+                for (int s = 0; s < horizontalSpacing; s++) {
+                    System.out.print(" "); // Print additional spaces
+                }
             }
-            System.out.println(); // New line after each row
-            System.out.println(); // Extra line to increase vertical space
+            System.out.println();
         }
     }
+    
 
     public static void ExplainMap()
     {
@@ -98,7 +103,7 @@ public class ForLoopTeacher
                 RandomTreasure();
                 break;
             case 2:
-                MazeRunner();
+                PathTracer();
                 break;
             default:
                 break;
@@ -129,9 +134,9 @@ public class ForLoopTeacher
         DrawMap();
     }
 
-    public static void MazeRunner()
+    public static void PathTracer()
     {
-
+        // Maze generation logic will go here
         System.out.println("Maze Runner mode is not yet implemented.");
     }
 }
