@@ -15,3 +15,36 @@ public void start(Stage primaryStage) {
     primaryStage.setTitle("Jackpot Explorer Game");
     primaryStage.show();
 }
+private void setupGame(Stage primaryStage) {
+    // Initialize map and UI components
+    for (int i = 0; i < GRID_SIZE; i++) {
+        for (int j = 0; j < GRID_SIZE; j++) {
+            map[i][j] = ' ';
+        }
+    }
+    map[x][y] = '*';
+    spawnJackpotPoints();
+
+    // Set up grid
+    gridPane = new GridPane();
+    for (int i = 0; i < GRID_SIZE; i++) {
+        for (int j = 0; j < GRID_SIZE; j++) {
+            Rectangle cell = new Rectangle(40, 40, Color.LIGHTGRAY);
+            gridCells[i][j] = cell;
+            gridPane.add(cell, j, i);
+        }
+    }
+
+    // Initialize root layout
+    root = new BorderPane();
+    root.setCenter(gridPane);
+    root.setTop(tallyLabel);
+    tallyLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: black;");
+    BorderPane.setAlignment(tallyLabel, javafx.geometry.Pos.TOP_RIGHT);
+
+    renderMap();
+
+    Scene gameScene = new Scene(root, 400, 450);
+    primaryStage.setScene(gameScene);
+}
+
