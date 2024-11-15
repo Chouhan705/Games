@@ -47,4 +47,17 @@ private void setupGame(Stage primaryStage) {
     Scene gameScene = new Scene(root, 400, 450);
     primaryStage.setScene(gameScene);
 }
+gameScene.setOnKeyPressed(event -> {
+    if (jackpotCount < TOTAL_JACKPOT_POINTS) {
+        if (event.getCode() == KeyCode.W && x > 0) {
+            moveCharacter(-1, 0);
+        } else if (event.getCode() == KeyCode.S && x < GRID_SIZE - 1) {
+            moveCharacter(1, 0);
+        } else if (event.getCode() == KeyCode.A && y > 0) {
+            moveCharacter(0, -1);
+        } else if (event.getCode() == KeyCode.D && y < GRID_SIZE - 1) {
+            moveCharacter(0, 1);
+        }
+    }
+});
 
