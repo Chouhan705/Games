@@ -60,4 +60,17 @@ gameScene.setOnKeyPressed(event -> {
         }
     }
 });
+private void spawnJackpotPoints() {
+    Random random = new Random();
+    while (jackpotPoints.size() < TOTAL_JACKPOT_POINTS) {
+        int jackpotX = random.nextInt(GRID_SIZE);
+        int jackpotY = random.nextInt(GRID_SIZE);
+
+        if (map[jackpotX][jackpotY] == ' ' && !(jackpotX == x && jackpotY == y)) {
+            map[jackpotX][jackpotY] = 'J';
+            jackpotPoints.add(new int[]{jackpotX, jackpotY});
+        }
+    }
+}
+
 
