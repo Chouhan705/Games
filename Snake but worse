@@ -1242,9 +1242,7 @@ int play()
     v[z1]=f;
     switch(f)
     {
-case 8:
-      
-    
+case 6:
      if(check())
      return play();
      
@@ -1252,19 +1250,19 @@ case 8:
       
      break;
     
- case 2:
+ case 7:
      if(check())
      return play();
      down();
      break;
 
- case 6:
+ case 8:
        if(check())
        return play();
       rit();
       break;
 
-case 4:
+case 9:
        if(check())
        return play();
       left();
