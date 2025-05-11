@@ -13,6 +13,7 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 FPS = 60
+GAME_END_DELAY = 1500 # Milliseconds to show final board before fading (1.5 seconds)
 
 # Initialize Pygame
 pygame.init()
@@ -65,15 +66,28 @@ def check_draw(board):
             return False
     return True
 
-# Fade to black animation
+# Fade the current screen content to black
 def fade_to_black():
-    for alpha in range(0, 256, 5):
-        screen.fill(BLACK)
-        surface = pygame.Surface((WIDTH, HEIGHT))
-        surface.set_alpha(alpha)  # Set the alpha level
-        screen.blit(surface, (0, 0))  # Draw the fading surface
-        pygame.display.flip()
-        pygame.time.delay(20)
+    # This function assumes 'screen' currently holds the image to be faded.
+    fade_overlay = pygame.Surface((WIDTH, HEIGHT))  # Create an overlay surface
+    fade_overlay.fill(BLACK)                        # Fill it with the target fade color (black)
+    
+    # Iterate alpha from 0 (transparent) to 255 (fully opaque)
+    # Adjust the step (e.g., 10 or 15) and delay (e.g., 20-30ms) to control fade speed
+    for alpha in range(0, 255 + 1, 15):
+        fade_overlay.set_alpha(alpha)             # Set current alpha for the overlay
+        # We need to re-blit the current screen content if it wasn't persistent,
+        # but since we just drew the final board on 'screen' and flipped,
+        # 'screen' holds the image. We blit the overlay on top.
+        screen.blit(fade_overlay, (0, 0))         # Blit the semi-transparent overlay onto the screen
+        pygame.display.flip()                       # Update the display to show this fade step
+        pygame.time.delay(30)                       # Pause for smoothness
+    
+    # After the loop, the screen is covered by a fully opaque black surface.
+    # Ensure the screen is purely black for the text that follows.
+    screen.fill(BLACK)
+    pygame.display.flip() # Show the pure black screen briefly (optional, but good practice)
+
 
 # Pregame Menu
 def pre_game_menu():
@@ -113,7 +127,6 @@ def main(mode):
     game_over = False
     winner = None
 
-    # Button for computer move
     play_move_button = pygame.Rect(WIDTH // 2 - 70, HEIGHT - 80, 140, 50)
 
     while True:
@@ -121,7 +134,6 @@ def main(mode):
         draw_grid()
         draw_markers(board)
 
-        # Highlight the current player's turn
         if not game_over:
             if player_turn:
                 turn_text = small_font.render("X's Turn", True, BLACK)
@@ -129,13 +141,11 @@ def main(mode):
                 turn_text = small_font.render("O's Turn", True, BLACK)
             screen.blit(turn_text, (WIDTH // 2 - turn_text.get_width() // 2, HEIGHT - 100))
 
-        # Draw "Play Move" button only in single-player mode and if it's O's turn
-        if mode == "single" and not player_turn and not game_over: # Added not player_turn and not game_over
-            pygame.draw.rect(screen, GREEN, play_move_button)
-            play_move_text = small_font.render("Play Move", True, BLACK)
-            screen.blit(play_move_text, (play_move_button.x + 10, play_move_button.y + 10))
+            if mode == "single" and not player_turn:
+                pygame.draw.rect(screen, GREEN, play_move_button)
+                play_move_text = small_font.render("Play Move", True, BLACK)
+                screen.blit(play_move_text, (play_move_button.x + 10, play_move_button.y + 10))
 
-        # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -144,53 +154,73 @@ def main(mode):
             if event.type == pygame.MOUSEBUTTONDOWN and not game_over:
                 mouse_x, mouse_y = event.pos
 
-                # --- Handle "Play Move" button click in SINGLE PLAYER ---
                 if mode == "single" and not player_turn and play_move_button.collidepoint(event.pos):
                     computer_move(board)
                     if check_winner(board):
                         winner = "O"
                         game_over = True
-                    player_turn = not player_turn  # Switch turns
-                
-                # --- Handle clicks on the BOARD itself ---
-                else: # Not a button click, or mode is multiplayer (where button isn't active for placing marks)
+                    elif check_draw(board): # Check for draw after computer move
+                        winner = "Draw"
+                        game_over = True
+                    player_turn = not player_turn
+                else:
                     clicked_row = mouse_y // CELL_SIZE
                     clicked_col = mouse_x // CELL_SIZE
 
-                    # Ensure the click is within the board grid
                     if 0 <= clicked_row < BOARD_SIZE and 0 <= clicked_col < BOARD_SIZE:
-                        if board[clicked_row][clicked_col] == "":  # If the cell is empty
-                            if player_turn:  # X's turn (applies to both single and multiplayer)
+                        if board[clicked_row][clicked_col] == "":
+                            current_player_mark = "X" if player_turn else "O"
+                            
+                            if player_turn: # X's turn (human in both modes)
                                 board[clicked_row][clicked_col] = "X"
                                 if check_winner(board):
                                     winner = "X"
                                     game_over = True
-                                player_turn = not player_turn  # Switch turns
+                                elif check_draw(board): # Check for draw after X's move
+                                    winner = "Draw"
+                                    game_over = True
+                                player_turn = not player_turn
                             
-                            elif mode == "multiplayer" and not player_turn:  # O's turn in MULTIPLAYER
+                            elif mode == "multiplayer" and not player_turn: # O's turn (human in multiplayer)
                                 board[clicked_row][clicked_col] = "O"
                                 if check_winner(board):
                                     winner = "O"
                                     game_over = True
-                                player_turn = not player_turn  # Switch turns
+                                elif check_draw(board): # Check for draw after O's move
+                                    winner = "Draw"
+                                    game_over = True
+                                player_turn = not player_turn
         
-        if check_draw(board) and not winner: # Check for draw only if no winner yet
-            winner = "Draw" # Store "Draw" as winner type
+        # This check is a bit redundant if we check draw after each move, but good as a fallback.
+        if not game_over and check_draw(board) and not winner:
+            winner = "Draw"
             game_over = True
 
         if game_over:
-            fade_to_black()
-            screen.fill(BLACK)
+            # --- Step 1: Display the final board state clearly ---
+            screen.fill(WHITE)    # Clear screen for the final board view
+            draw_grid()           # Redraw grid
+            draw_markers(board)   # Redraw X/O positions with the final move
+            pygame.display.flip() # Update the display to show this final board state
+            
+            # --- Step 2: Pause to allow player to see the final move ---
+            pygame.time.delay(GAME_END_DELAY) # Pause for the defined duration
+
+            # --- Step 3: Fade the current view to black ---
+            fade_to_black()  # Call the revised fade function
+
+            # --- Step 4: Display game over message on the now black screen ---
+            # screen.fill(BLACK) # This is now handled by the end of fade_to_black()
+            
             if winner and winner != "Draw":
                 text = font.render(f"{winner} wins!", True, WHITE)
-            else: # Covers None (though unlikely here) and "Draw"
+            else: # Covers "Draw"
                 text = font.render("It's a Draw!", True, WHITE)
             screen.blit(text, (WIDTH // 4, HEIGHT // 3))
 
             return_text = small_font.render("Press 'R' to Return to Menu", True, WHITE)
             screen.blit(return_text, (WIDTH // 4, HEIGHT // 2 + 50))
-            
-            pygame.display.flip()
+            pygame.display.flip() # Show the text
 
             waiting = True
             while waiting:
@@ -201,7 +231,7 @@ def main(mode):
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_r:
                             waiting = False
-            return
+            return  # Exit the main loop to return to the menu
 
         pygame.display.flip()
         pygame.time.Clock().tick(FPS)
